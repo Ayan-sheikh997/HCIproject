@@ -1,4 +1,4 @@
 Flask
 Flask-Mail
 gunicorn
-psycopg[binary]
+psycopg2-binary
