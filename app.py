@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, jsonify, session, redirect, url_for
-import psycopg2
+import psycopg
 from flask_mail import Mail, Message
 from psycopg2.extras import RealDictCursor
 import hashlib
@@ -161,3 +161,4 @@ def checkout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
