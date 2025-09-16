@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template, jsonify, session, redirect, url_for
-import psycopg
+
 from flask_mail import Mail, Message
+import psycopg2
 from psycopg2.extras import RealDictCursor
+
 import hashlib
 app = Flask(__name__)
 app.secret_key = "your_secret_key_here"
@@ -20,7 +22,7 @@ mail = Mail(app)
 DATABASE_URL = "postgresql://ayan_641e_user:Jgi7PNtvYaQawSp6EAlmWWsB0ADhXzdA@dpg-d34na0h5pdvs73b3va6g-a.oregon-postgres.render.com/ayan_641e"
 
 def get_db_connection():
-    conn = psycopg.connect(DATABASE_URL, sslmode="require")
+    conn = psycopg2.connect(DATABASE_URL, sslmode="require")
     return conn
 
 # -------------------- ROUTES --------------------
@@ -161,5 +163,6 @@ def checkout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
