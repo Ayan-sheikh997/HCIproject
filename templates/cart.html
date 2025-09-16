@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        h1 { text-align: center; color: #333; }
+        .cart-container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 2px 5px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
+        th { background: #6f4e37; color: #fff; }
+        .btn { background: #6f4e37; color: #fff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; margin-top: 20px; display: block; margin-left: auto; margin-right: auto; }
+        .btn:hover { background: #5a3d2d; }
+    </style>
+</head>
+<body>
+    <h1>Your Cart 🛒</h1>
+    <div class="cart-container">
+        <table id="cart-table">
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+            </tr>
+        </table>
+        <h2 id="total"></h2>
+        <button class="btn" onclick="checkout()">Checkout</button>
+    </div>
+
+    <script>
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let table = document.getElementById("cart-table");
+            let total = 0;
+
+            cart.forEach(item => {
+                let row = table.insertRow();
+                row.insertCell(0).innerText = item.name;
+                row.insertCell(1).innerText = "₹" + item.price;
+                total += item.price;
+            });
+
+            document.getElementById("total").innerText = "Total: ₹" + total;
+        }
+
+        function checkout() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            if (cart.length === 0) {
+                alert("Cart is empty!");
+                return;
+            }
+            fetch("/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(cart)
+            }).then(res => res.json())
+              .then(data => {
+                  alert(data.message);
+                  localStorage.removeItem("cart");
+                  window.location.href = "/";
+              });
+        }
+
+        window.onload = loadCart;
+    </script>
+</body>
+</html>

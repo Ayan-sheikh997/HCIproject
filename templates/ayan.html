@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Shop</title>
+  <style>
+/* Splash screen */
+#splash {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url("{{ url_for('static', filename='images/co1.jpeg') }}") no-repeat center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  z-index: 9999;
+}
+
+#splash h1 {
+  font-size: 50px;
+  margin: 0;
+}
+
+#splash p {
+  font-size: 22px;
+  margin-top: 15px;
+}
+
+/* Fade out animation */
+.hidden {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* Main content hidden initially */
+#main {
+  display: none;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  color: #333;
+}
+
+header {
+  background: url("{{ url_for('static', filename='images/co1.jpeg') }}") no-repeat center/cover;
+  text-align: center;
+  padding: 100px 20px;
+  color: #fff;
+  position: relative;
+}
+
+header h1 {
+  font-size: 40px;
+  margin: 0;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+}
+
+header p {
+  font-size: 20px;
+  margin-top: 10px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+nav {
+  text-align: center;
+  background: #fff;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+section {
+  padding: 50px 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.product img {
+  width: 250px;
+  border-radius: 10px;
+}
+
+.product-info {
+  max-width: 500px;
+}
+
+.btn {
+  background: #6f4e37;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.features div {
+  flex: 1;
+  padding: 20px;
+}
+
+.flavours {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.flavours div {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.flavours img {
+  width: 200px;
+}
+
+.subscribe {
+  background: #fff3e6;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.subscribe input {
+  padding: 10px;
+  width: 250px;
+  margin-right: 10px;
+}
+
+.footer {
+  background: #2c1a12;
+  color: #fff;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.footer div {
+  margin: 10px;
+  max-width: 250px;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  margin: 5px 0;
+}
+  </style>
+</head>
+<body>
+  <div id="splash">
+    <h1>Welcome to De Cafe</h1>
+    <p>Enjoy the finest coffee experience ☕</p>
+  </div>
+
+  <div id="main">
+    <header>
+      <h1>IT’S A BREAK WITH COFFEE</h1>
+      <p>Enjoy the best coffee flavours</p>
+    </header>
+
+    <nav>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('login') }}">Menu</a>
+      <a href="#">Deals</a>
+      <a href="{{ url_for('login')}}">Login</a>
+    </nav>
+
+    <section>
+      <div class="product">
+        <img src="{{ url_for('static', filename='images/co2.jpeg') }}" alt="Coffee Image">
+        <div class="product-info">
+          <h2>Milton’s Choco Coffee</h2>
+          <p>Chocolate coffee, also known as mocha, is a delightful drink that combines the richness of chocolate with the invigorating taste of coffee. Available hot or cold, customizable to your preference.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 style="text-align:center;">The Best Taste From The Process</h2>
+      <div class="features">
+        <div>
+          <img src="{{ url_for('static', filename='images/co3.jpeg') }}" alt="Hand Roasted"><br>
+          <strong>Hand Roasted</strong>
+        </div>
+        <div>
+          <img src="{{ url_for('static', filename='images/co4.jpeg') }}" alt="Direct Trade"><br>
+          <strong>Direct Trade</strong>
+        </div>
+        <div>
+          <img src="{{ url_for('static', filename='images/co5.jpeg') }}" alt="Organic Taste"><br>
+          <strong>Organic Taste</strong>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 style="text-align:center;">Our Popular Flavour</h2>
+      <div class="flavours">
+        <div>
+          <img src="{{ url_for('static', filename='images/co6.jpeg') }}" alt="Flavour 1">
+          <p>Hand Roasted Hot Chocolate With Milk</p>
+
+        </div>
+        <div>
+          <img src="{{ url_for('static', filename='images/co7.jpeg') }}" alt="Flavour 2">
+          <p>Hand Roasted Hot Chocolate With Milk</p>
+
+        </div>
+        <div>
+          <img src="{{ url_for('static', filename='images/co8.jpeg') }}" alt="Flavour 3">
+          <p>Hand Roasted Hot Chocolate With Milk</p>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="subscribe">
+      <h2>Get New Updates And Discount Offers</h2>
+      <p>Stay connected with us for latest deals & updates</p>
+      <input type="email" placeholder="Your Email...">
+      <button class="btn">Subscribe</button>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <h3>Milton’s</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur nisl id nisl cursus.</p>
+      </div>
+      <div>
+        <h3>Page</h3>
+        <a href="#">Home</a>
+        <a href="#">Menu</a>
+        <a href="#">Deals</a>
+        <a href="#">Favourite</a>
+      </div>
+      <div>
+        <h3>Links</h3>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
+      </div>
+      <div>
+        <h3>Contacts</h3>
+        <p>1 street </p>
+        <p>12346789</p>
+        <p>ayan@email.com</p>
+        <p>www.yourwebsite.com</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Splash screen fadeout
+    setTimeout(() => {
+      document.getElementById('splash').classList.add('hidden');
+      setTimeout(() => {
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('main').style.display = 'block';
+      }, 1000);
+    }, 2000);
+
+
+  </script>
+
+<div id="cart" style="display:none; position:fixed; top:0; right:0; width:350px; height:100%; background:#fff; box-shadow:-2px 0 8px rgba(0,0,0,0.3); padding:20px; overflow-y:auto; z-index:10000;">
+  <h2>Your Cart</h2>
+  <ul id="cart-items"></ul>
+  <p><strong>Total: </strong>₹<span id="cart-total">0</span></p>
+
+</div>
+
+</body>
+</html>

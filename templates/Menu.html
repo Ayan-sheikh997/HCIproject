@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; color: #333; }
+        header { background: url("{{ url_for('static', filename='images/co1.jpeg') }}") no-repeat center/cover; text-align: center; padding: 80px 20px; color: #fff; }
+        header h1 { font-size: 40px; margin: 0; text-shadow: 2px 2px 5px rgba(0,0,0,0.6); }
+        nav { text-align: center; background: #fff; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        nav a { margin: 0 15px; text-decoration: none; font-weight: bold; color: #333; }
+        nav a.cart { color: #6f4e37; }
+        h2 { text-align: center; margin: 40px 0 20px; }
+        .menu-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1100px; margin: auto; padding: 20px; }
+        .menu-item { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        .menu-item img { width: 200px; border-radius: 10px; margin-bottom: 10px; }
+        .menu-item h3 { margin: 10px 0; color: #333; }
+        .menu-item p { color: #555; font-size: 14px; margin: 5px 0; }
+        .price { font-weight: bold; margin: 10px 0; display: block; font-size: 16px; }
+        .btn { background: #6f4e37; color: #fff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; transition: 0.3s; }
+        .btn:hover { background: #5a3d2d; }
+        footer { background: #2c1a12; color: #fff; text-align: center; padding: 20px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Our Menu</h1>
+        <p>Choose your favorite coffee & treats</p>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('front') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('menu') }}">Menu</a>
+        <a href="{{ url_for('cart') }}" class="cart">🛒 Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+
+    <h2>Popular Choices</h2>
+    <div class="menu-container">
+        <!-- Menu Item 1 -->
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/co2.jpeg') }}" alt="Coffee">
+            <h3>Classic Coffee</h3>
+            <p>Rich and aromatic hot coffee.</p>
+            <span class="price">₹120</span>
+            <button class="btn" onclick="addToCart('Classic Coffee', 120)">Add To Cart</button>
+        </div>
+
+        <!-- Menu Item 2 -->
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/co3.jpeg') }}" alt="Tea">
+            <h3>Special Tea</h3>
+            <p>Refreshing herbal and classic teas.</p>
+            <span class="price">₹80</span>
+            <button class="btn" onclick="addToCart('Special Tea', 80)">Add to Cart</button>
+        </div>
+
+        <!-- Menu Item 3 -->
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/co4.jpeg') }}" alt="Cake">
+            <h3>Cakes & Pastries</h3>
+            <p>Freshly baked cakes and desserts.</p>
+            <span class="price">₹150</span>
+            <button class="btn" onclick="addToCart('Cakes & Pastries', 150)">Add to Cart</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 De Cafe | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function loadCartCount() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            document.getElementById("cart-count").textContent = cart.length;
+        }
+
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push({ name, price });
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCartCount();
+            alert(name + " added to cart!");
+        }
+
+        window.onload = loadCartCount;
+    </script>
+
+</body>
+</html>

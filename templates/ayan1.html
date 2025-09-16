@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De Cafe - Coffee Shop</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --coffee: #6f4e37;
+      --coffee-dark: #4b2e1d;
+      --cream: #fff8f0;
+      --light: #f5f5f5;
+      --text: #333;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--light);
+      color: var(--text);
+    }
+
+    /* === Header === */
+    header {
+      background: url("{{ url_for('static', filename='images/co1.jpeg') }}") no-repeat center/cover;
+      text-align: center;
+      padding: 120px 20px;
+      color: #fff;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 50px;
+      margin: 0;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+      animation: fadeDown 1s ease-in-out;
+    }
+
+    header p {
+      font-size: 22px;
+      margin-top: 15px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+      animation: fadeUp 1.2s ease-in-out;
+    }
+
+    /* === Navigation === */
+    nav {
+      text-align: center;
+      background: #fff;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--coffee);
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--coffee-dark);
+    }
+
+    /* === Products === */
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .product {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .product img {
+      width: 280px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-info {
+      max-width: 500px;
+    }
+
+    .btn {
+      background: var(--coffee);
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--coffee-dark);
+    }
+
+    /* === Flavours Grid === */
+    .flavours {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .flavours div {
+      background: #fff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .flavours div:hover {
+      transform: scale(1.05);
+    }
+
+    .flavours img {
+      width: 200px;
+      border-radius: 8px;
+    }
+
+    /* === Cart Sidebar === */
+    #cart {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 10000;
+      transition: right 0.4s ease-in-out;
+    }
+
+    #cart.show {
+      right: 0;
+    }
+
+    #cart-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--coffee);
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 10001;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
+
+    #cart-btn:hover {
+      background: var(--coffee-dark);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding: 10px;
+      background: var(--cream);
+      border-radius: 6px;
+    }
+
+    /* === Footer === */
+    .footer {
+      background: var(--coffee-dark);
+      color: #fff;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      margin: 5px 0;
+    }
+
+    /* === Animations === */
+    @keyframes fadeDown {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Splash -->
+  <div id="splash" style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;background:var(--coffee);color:#fff;">
+    <h1 style="font-size:48px;">Welcome to De Cafe</h1>
+    <p style="font-size:20px;">Enjoy the finest coffee experience ☕</p>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main" style="display:none;">
+    <header>
+      <h1>IT’S A BREAK WITH COFFEE</h1>
+      <p>Enjoy the best coffee flavours</p>
+    </header>
+
+    <nav>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('menu1') }}">Menu</a>
+      <a href="#">Deals</a>
+      <a href="{{ url_for('login')}}">Login</a>
+    </nav>
+
+    <!-- Floating Cart Button -->
+    <button id="cart-btn">🛒 Cart</button>
+
+    <!-- Product Section -->
+    <section>
+      <div class="product">
+        <img src="{{ url_for('static', filename='images/co2.jpeg') }}" alt="Coffee Image">
+        <div class="product-info">
+          <h2>Milton’s Choco Coffee</h2>
+          <p>Chocolate coffee, also known as mocha, is a delightful drink that combines chocolate with coffee.</p>
+          <button class="btn add-to-cart" data-name="Milton’s Choco Coffee" data-price="120">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flavours -->
+    <section>
+      <h2 style="text-align:center;">Our Popular Flavour</h2>
+      <div class="flavours">
+        <div>
+          <img src="{{ url_for('static', filename='images/co6.jpeg') }}" alt="Flavour 1">
+          <p>Hand Roasted Hot Chocolate With Milk</p>
+          <button class="btn add-to-cart" data-name="Hot Chocolate 1" data-price="90">Add to Cart</button>
+        </div>
+        <div>
+          <img src="{{ url_for('static', filename='images/co7.jpeg') }}" alt="Flavour 2">
+          <p>Hand Roasted Hot Chocolate With Milk</p>
+          <button class="btn add-to-cart" data-name="Hot Chocolate 2" data-price="95">Add to Cart</button>
+        </div>
+        <div>
+          <img src="{{ url_for('static', filename='images/co8.jpeg') }}" alt="Flavour 3">
+          <p>Hand Roasted Hot Chocolate With Milk</p>
+          <button class="btn add-to-cart" data-name="Hot Chocolate 3" data-price="100">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cart">
+      <h2>Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p><strong>Total: </strong>₹<span id="cart-total">0</span></p>
+      <button class="btn" id="checkout-btn">Checkout</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div>
+        <h3>De Cafe</h3>
+        <p>Serving happiness in every cup since 2025.</p>
+      </div>
+      <div>
+        <h3>Pages</h3>
+        <a href="#">Home</a>
+        <a href="#">Menu</a>
+        <a href="#">Deals</a>
+        <a href="#">Favourite</a>
+      </div>
+      <div>
+        <h3>Follow Us</h3>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <p>123 Coffee Street</p>
+        <p>+91 9876543210</p>
+        <p>info@decafe.com</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Splash Screen
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+    }, 2000);
+
+    // Cart Logic
+    let cart = [];
+    const cartBtn = document.getElementById("cart-btn");
+    const cartDiv = document.getElementById("cart");
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+
+    cartBtn.addEventListener("click", () => {
+      cartDiv.classList.toggle("show");
+    });
+
+    function updateCart() {
+      cartItems.innerHTML = "";
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        let li = document.createElement("li");
+        li.classList.add("cart-item");
+        li.innerHTML = `<span>${item.name}</span> ₹${item.price}
+          <button onclick="removeItem(${index})">❌</button>`;
+        cartItems.appendChild(li);
+      });
+      cartTotal.textContent = total;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const name = btn.getAttribute("data-name");
+        const price = parseInt(btn.getAttribute("data-price"));
+        cart.push({ name, price });
+        updateCart();
+      });
+    });
+
+    // Checkout
+    document.getElementById("checkout-btn").addEventListener("click", () => {
+      fetch("/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cart)
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        cart = [];
+        updateCart();
+      });
+    });
+  </script>
+</body>
+</html>
