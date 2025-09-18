@@ -37,34 +37,17 @@
     </nav>
 
     <h2>Popular Choices</h2>
-    <div class="menu-container">
-        <!-- Menu Item 1 -->
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='images/co2.jpeg') }}" alt="Coffee">
-            <h3>Classic Coffee</h3>
-            <p>Rich and aromatic hot coffee.</p>
-            <span class="price">₹120</span>
-            <button class="btn" onclick="addToCart('Classic Coffee', 120)">Add To Cart</button>
-        </div>
-
-        <!-- Menu Item 2 -->
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='images/co3.jpeg') }}" alt="Tea">
-            <h3>Special Tea</h3>
-            <p>Refreshing herbal and classic teas.</p>
-            <span class="price">₹80</span>
-            <button class="btn" onclick="addToCart('Special Tea', 80)">Add to Cart</button>
-        </div>
-
-        <!-- Menu Item 3 -->
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='images/co4.jpeg') }}" alt="Cake">
-            <h3>Cakes & Pastries</h3>
-            <p>Freshly baked cakes and desserts.</p>
-            <span class="price">₹150</span>
-            <button class="btn" onclick="addToCart('Cakes & Pastries', 150)">Add to Cart</button>
-        </div>
+<div class="menu-container">
+    {% for product in products %}
+    <div class="menu-item">
+        <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <span class="price">₹{{ product.price }}</span>
+        <button class="btn" onclick="addToCart('{{ product.name }}', {{ product.price }})">Add to Cart</button>
     </div>
+    {% endfor %}
+</div>
 
     <footer>
         <p>© 2025 De Cafe | All Rights Reserved</p>
@@ -89,4 +72,5 @@
 
 </body>
 </html>
+
 
