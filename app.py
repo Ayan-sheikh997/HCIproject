@@ -1,8 +1,10 @@
 from flask import Flask, request, render_template, jsonify, session, redirect, url_for
-import psycopg2
+from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
+import psycopg2
 from psycopg2.extras import RealDictCursor
-import hashlib,random
+import os, hashlib, random
+
 app = Flask(__name__)
 app.secret_key = "your_secret_key_here"
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -19,9 +21,18 @@ mail = Mail(app)
 
 DATABASE_URL = "postgresql://ayan_641e_user:Jgi7PNtvYaQawSp6EAlmWWsB0ADhXzdA@dpg-d34na0h5pdvs73b3va6g-a.oregon-postgres.render.com/ayan_641e"
 
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
 def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL, sslmode="require")
     return conn
+
+
+
+
 
 # -------------------- ROUTES --------------------
 
@@ -50,6 +61,7 @@ def menu():
 
 @app.route('/Menu1')
 def menu1():
+     products = Product.query.all()
      return render_template('Menu.html')
 
 @app.route('/Deals')
@@ -209,3 +221,4 @@ def checkout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
