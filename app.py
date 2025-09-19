@@ -70,7 +70,7 @@ def menu():
 @app.route('/Menu1')
 def menu1():
      products = Product.query.all()
-     return render_template('Menu.html')
+     return render_template('Menu.html', products = products)
 
 @app.route('/Deals')
 def deals():
@@ -229,5 +229,6 @@ def checkout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
