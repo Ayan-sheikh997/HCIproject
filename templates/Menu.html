@@ -38,16 +38,31 @@
 
     <h2>Popular Choices</h2>
 <div class="menu-container">
-    {% for product in products %}
+   {% for product in products %}
     <div class="menu-item">
-        <img src="{{ url_for('static', filename=product.image_url.strip()) }}" alt="{{ product.image_url }}">
+        <p>DB Value: '{{ product.image_url }}'</p>
+        <p>
+            {% if product.image_url %}
+                Generated URL: {{ url_for('static', filename=product.image_url|trim) }}
+            {% else %}
+                ❌ No image_url in DB
+            {% endif %}
+        </p>
+
+        {% if product.image_url %}
+            <img src="{{ url_for('static', filename=product.image_url|trim) }}" 
+                 alt="{{ product.name }}" 
+                 style="width:200px;border:1px solid red">
+        {% else %}
+            <p>No image available</p>
+        {% endif %}
+
         <h3>{{ product.name }}</h3>
         <p>{{ product.description }}</p>
         <span class="price">₹{{ product.price }}</span>
-        <button class="btn" onclick="addToCart('{{ product.name }}', {{ product.price }})">Add to Cart</button>
     </div>
-    {% endfor %}
-</div>
+{% endfor %}
+
 
     <footer>
         <p>© 2025 De Cafe | All Rights Reserved</p>
@@ -72,6 +87,7 @@
 
 </body>
 </html>
+
 
 
 
